@@ -1,13 +1,16 @@
 import json
 from utils.singleton import Singleton
+import os
 #from logpkg.log_decorator import setup_logger,log_to_file
 #logger = setup_logger("my_app", log_file="app.log")
 class _CommandConfig:
-    file_path='/Users/krishnareddy/PycharmProjects/kobraCld/config/commands.json'
-    def __init__(self, file_path=file_path):
+    #file_path='/Users/krishnareddy/PycharmProjects/kobraCldWN/config/commands.json'
+    def __init__(self, base_dir='config/'):
         # if file_path is None:
         #     file_path = "../../config/config.json"
-        self.file_path = file_path
+        self.base_dir=base_dir
+        self.file_path = os.path.join(self.base_dir, 'commands.json')
+        #self.file_path = file_path
         self._config_data = None
         self.load_config()
 

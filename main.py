@@ -3,6 +3,7 @@
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 import asyncio
+import argparse
 from utils.kafka.producer_kafka import Producer
 #from utils.kafka.consumer_kafka import AsyncKafkaConsumer
 from logpkg.log_kcld import LogKCld,log_to_file
@@ -18,6 +19,7 @@ def print_hi(name) -> None:
 @log_to_file(logger)
 async def main() ->None:
     from utils.ReadConfig import ReadConfig as rc
+    from utils.CommandConfig import CommandConfig as cc
     from utils.server_side.SsOsSystemCmd import SsOsSystemCmd as ss
     read_config = rc()
     kafka_config = read_config.kakfa_config
@@ -32,7 +34,7 @@ async def main() ->None:
     # This is consumer that  receives the command output from the client.
     #consumer = AsyncKafkaConsumer(kafka_config['bootstrap_servers'], kafka_config['group_id'], kafka_config['command_output_topic'])
     #print(system_config_info)
-    data=os_system_cmd.get_cpu_info()
+    data=os_system_cmd.get_system_info()
     producer.send(data)
     #await consumer.consume_messages()
 

@@ -4,7 +4,7 @@ from utils.ReadConfig import ReadConfig as rc
 from utils.singleton import Singleton
 
 class _LogKCld(object):
-    read_config = rc('/Users/krishnareddy/PycharmProjects/kobraCld/config/config.json')
+    read_config = rc()
     logging_config = read_config.logging_config
     #name="my_app"
     log_file = logging_config['file_path']

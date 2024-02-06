@@ -1,9 +1,9 @@
 import multiprocessing
 from logpkg.log_kcld import LogKCld,log_to_file
 import subprocess
-from utils.os.OsSystemCmd import OsSystemCmd
-from utils.os.OsMetricsCmd import OsMetricsCmd
-from utils.os.OsCustomCmd import OsCustomCmd
+from utils.osutils.OsSystemCmd import OsSystemCmd
+from utils.osutils.OsMetricsCmd import OsMetricsCmd
+from utils.osutils.OsCustomCmd import OsCustomCmd
 import json
 import jsonpickle
 import os
@@ -26,26 +26,33 @@ class MsgProcess():
 
                 if first_key == "Os_System_Cmd":
                     print(f"inside the if for validation {msg_json}")
+                    print(f"key inside the if {list(msg_json['Os_System_Cmd'].keys())[0]}")
+                    cmd_key=list(msg_json['Os_System_Cmd'].keys())[0]
                     os_system_cmd=OsSystemCmd(msg_json)
-                    result=os_system_cmd.cmd_execute()
+                    if hasattr(os_system_cmd, cmd_key):
+                        method_to_call = getattr(os_system_cmd, cmd_key)
+                        result = method_to_call()
+                        print(result)
+                    else:
+                        print(f"Method '{cmd_key}' not found.")
+                    #list_function=os_system_cmd.list_function()
+                    #result=list_function[cmd_key]()
 
                 elif first_key == "OS_Metrics_Cmd":
                     OsMetricsCmd(msg_json[first_key])
                 elif first_key == "OS_Custom_cmd":
-                    OsMetricsCmd(msg_json[first_key])
+                    OsCustomCmd(msg_json[first_key])
 
-                elif first_key == "Container_Cmd":
-                    action3(json_data[first_key])
                 else:
                     print(f"passing in {__name__}")
                     pass
             else:
                 print("Error: Empty JSON data")
 
-            result['hostname'] = os.uname()
-            # Execute the OS command
-            result['cpu_count'] = os.cpu_count()
-            result['Total_memory'] = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")/(1024*1024*1024)
+            # result['hostname'] = osutils.uname()
+            # # Execute the OS command
+            # result['cpu_count'] = osutils.cpu_count()
+            # result['Total_memory'] = osutils.sysconf("SC_PAGE_SIZE") * osutils.sysconf("SC_PHYS_PAGES")/(1024*1024*1024)
             # result = subprocess.run(command, shell=True, check=True, capture_output=True)
             # print('Command executed successfully. Output:', result.stdout.decode('utf-8'))
         except subprocess.CalledProcessError as e:
