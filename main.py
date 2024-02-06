@@ -5,23 +5,20 @@
 import asyncio
 import argparse
 from utils.kafka.producer_kafka import Producer
+from utils.ReadConfig import ReadConfig as rc
+from utils.CommandConfig import CommandConfig as cc
+from utils.server_side.SsOsSystemCmd import SsOsSystemCmd as ss
 #from utils.kafka.consumer_kafka import AsyncKafkaConsumer
 from logpkg.log_kcld import LogKCld,log_to_file
 logger=LogKCld()
-#logger = setup_logger("my_app", log_file="app.log")
-#from utils.kafka.producer_kafka import *
-#from utils.kafka.
-@log_to_file(logger)
-def print_hi(name) -> None:
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+
 
 @log_to_file(logger)
 async def main() ->None:
-    from utils.ReadConfig import ReadConfig as rc
-    from utils.CommandConfig import CommandConfig as cc
-    from utils.server_side.SsOsSystemCmd import SsOsSystemCmd as ss
-    read_config = rc()
+    parser = argparse.ArgumentParser(description='A Python CLI application')
+    parser.add_argument('--configDir', type=str, help='Please specify ConfigDir')
+    args = parser.parse_args()
+    read_config = rc(args.configDir)
     kafka_config = read_config.kakfa_config
     #os_system_cmd=command_config.os_system_cmd
     os_system_cmd=ss()
@@ -44,5 +41,4 @@ async def main() ->None:
 
 
 if __name__ == '__main__':
-    print_hi("Krishna")
     asyncio.run(main())
