@@ -1,7 +1,8 @@
 import json
 from utils.singleton import Singleton
 import os
-
+#from logpkg.log_decorator import setup_logger,log_to_file
+#logger = setup_logger("my_app", log_file="app.log")
 class _ReadConfig:
 
     def __init__(self,base_dir=None):
@@ -28,8 +29,12 @@ class _ReadConfig:
         return self._config_data['logging']
 
     @property
-    def kakfa_config(self):
+    def kafka_config(self):
         return self._config_data['kafka']
+
+    @property
+    def kafka_ssl(self):
+        return self.kafka_config['ssl_config']
 
     @property
     def encryption_config(self):

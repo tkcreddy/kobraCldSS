@@ -4,10 +4,16 @@
         "file_path": "/var/log/kcld.log"
     },
   "kafka": {
-  "bootstrap_servers": "Krishnas-MacBook-Pro.local:9092",
+  "bootstrap_servers": "kafka-server:9093",
   "group_id": "your_consumer_group_id",
   "topic": "your_kafka_topic",
-  "command_output_topic": "command_output_topic"
+  "command_output_topic": "command_output_topic",
+    "ssl_config":{
+    "security_protocol": "SSL", "ssl_cafile": "config/ssl/ca-cert.pem",
+    "ssl_certfile": "config/ssl/client-cert.pem",
+    "ssl_keyfile": "config/ssl/client-key.pem",
+      "ssl_password": "welcome123"
+  }
 },
   "encryption": {
     "key": "56ixMxYFTmxLfIh6q2dcxYph8kQF1sK8eghI3NHszsHOhh2oK7"

@@ -38,7 +38,7 @@ class AsyncKafkaConsumer:
 
 async def main():
     read_config = rc('/Users/krishnareddy/PycharmProjects/kobraCld/config/config.json')
-    kafka_config = read_config.kakfa_config
+    kafka_config = read_config.kafka_config
     print(kafka_config['bootstrap_servers'])
     #producer = AsyncKafkaProducerWithState(kafka_config['bootstrap_servers'], kafka_config['topic'])
     consumer = AsyncKafkaConsumer(kafka_config['bootstrap_servers'], kafka_config['group_id'], kafka_config['topic'])

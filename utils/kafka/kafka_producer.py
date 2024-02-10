@@ -23,7 +23,7 @@ class AsyncKafkaProducerWithState:
 
         await self.producer.stop()
 read_config = rc('/Users/krishnareddy/PycharmProjects/kobraCld/config/config.json')
-kafka_config = read_config.kakfa_config
+kafka_config = read_config.kafka_config
 print(kafka_config['bootstrap_servers'])
 # Example usage
 bootstrap_servers = kafka_config['bootstrap_servers']
